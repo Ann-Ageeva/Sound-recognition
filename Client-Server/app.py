@@ -1,6 +1,7 @@
+
 from flask import Flask, request, redirect, render_template
 
-ALLOWED_EXTENSIONS = {'wav', 'mp3'}
+ALLOWED_EXTENSIONS = {'wav'}
 
 app = Flask(__name__)
 
@@ -11,9 +12,6 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # check if the post request has the file part
-        if 'sample1' not in request.files or 'sample2' not in request.files:
-            return redirect(request.url)
             
         sample1 = request.files['sample1']
         sample2 = request.files['sample2']
