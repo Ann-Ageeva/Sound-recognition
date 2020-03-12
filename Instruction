@@ -1,0 +1,14 @@
+"""
+conda create -n pack_area -f environment.yml
+conda activate pack_area
+"""
+
+FOR CLIENT-SERVER APP (start server):
+"""
+python app.py
+"""
+
+FOR REQUEST APP:
+"""
+python request.py
+"""
