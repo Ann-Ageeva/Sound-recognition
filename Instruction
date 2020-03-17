@@ -1,14 +1,10 @@
 """
 conda create -n pack_area -f environment.yml
 conda activate pack_area
-"""
 
-FOR CLIENT-SERVER APP (start server):
-"""
+# start server:
 python app.py
-"""
 
-FOR REQUEST APP:
-"""
+# client part for recording wav files and sending it to server
 python request.py
 """
