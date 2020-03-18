@@ -1,5 +1,12 @@
-Руководитель: Липкин.
+Setup
 
-Глобальная цель работы: Распознавание звука
+"""
+conda env create -f environment.yml
+conda activate sound-recog
 
-Цель со слов Афраймовича: Пока не большой продукт, а узкоспециализированная задача: Научиться при помощи техник компьютерного обучения отличать звук дрона от всего остального мира.
+# start server:
+python app.py
+
+# client part for recording wav files and sending it to server
+python request.py
+"""
