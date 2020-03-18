@@ -1,6 +1,6 @@
-Setup
+# Setup
 
-"""
+```
 conda env create -f environment.yml
 conda activate sound-recog
 
@@ -9,4 +9,4 @@ python app.py
 
 # client part for recording wav files and sending it to server
 python request.py
-"""
+```
