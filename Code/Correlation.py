@@ -1,40 +1,49 @@
-from scipy.stats.stats import pearsonr
-from scipy.stats import linregress
 import os
 import numpy 
-from numpy.fft import rfft, rfftfreq
 import librosa
 import matplotlib.pyplot as plt
 import librosa.display
+from numpy.fft import rfft, rfftfreq
 
-directory = 'C:/Users/BigDDY/Desktop/Test'
-files = os.listdir(directory)
+def FindBestCor(sample, listOfFurie):
+    best = abs(numpy.corrcoef(sample, listOfFurie[0])[0,1])
+    
+    for i in range(1, len(listOfFurie)):
+        corrCoeff = abs(numpy.corrcoef(sample, listOfFurie[i])[0,1])
+        if corrCoeff > best:
+            best = corrCoeff
+    return best
 
-discr = list()
+def MakeEqual(files):
+    min = len(files[0])
+    
+    for file in range(1, len(files)):
+        if len(files[file]) < min:
+            min = len(files[file])
+            
+    for file in range(0, len(files)):
+        if len(files[file]) > min:
+            files[file] = files[file][len(files[file]) - min : ]
+
+directory  = 'C:/Users/BigDDY/Desktop/Repos/Sound-recognition/Code/Test'
+files      = os.listdir(directory)
+
+discr      = list()
 furie_list = list()
 
 for file in range(0, len(files)):
-    x, sr = librosa.load('C:/Users/BigDDY/Desktop/Test/' + str(files[file]))
+    x, sr = librosa.load('C:/Users/BigDDY/Desktop/Repos/Sound-recognition/Code/Test/' + str(files[file]))
     discr.append(x)
-    
+
+MakeEqual(discr)
 for file in range(0, len(discr)):
     furie = rfft(discr[file])
     furie_list.append(furie)
 
-x, sr = librosa.load('C:/Users/BigDDY/Desktop/File/1.wav')
+x, sr        = librosa.load('C:/Users/BigDDY/Desktop/Repos/Sound-recognition/Code/File/1.wav')
 sample_furie = rfft(x)
+sample_furie = sample_furie[len(sample_furie) - len(furie_list[0]) : len(sample_furie)]
 
-def FindBestCor(sample, listOfFurie):
-    best = numpy.corrcoef(sample, listOfFurie[0])[0,1]
-    indexOfBest = 0
-    
-    for i in range(1, len(listOfFurie)):
-        corrCoeff = numpy.corrcoef(sample, listOfFurie[i])[0,1]
-        if corrCoeff > best:
-            best = corrCoeff
-            indexOfBest = i
-    return best
-    
-bestCor = FindBestCor(sample_furie, furie_list)
+Best = FindBestCor(sample_furie, furie_list)
 
-print(bestCor)
+print(Best)
