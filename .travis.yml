@@ -30,6 +30,7 @@ before_script:
   - conda list
 
 script:
-  - black sound-recognition
-  - isort -y -rc sound-recognition
-  - flake8 sound-recognition
+  # check that black formatting would not be applied
+  - black --check .
+  - isort -rc -c .
+  - flake8
