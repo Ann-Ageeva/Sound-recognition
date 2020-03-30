@@ -31,7 +31,7 @@ def myAlg():
                 hInd = i
                 vInd = j
 
-    return (horizontAngles[hInd] + verticalAngles[vInd]) /  2
+    return (horizontAngles[hInd] + verticalAngles[vInd]) / 2
 
 
 def baseAlg(fistPath, secondPath):
@@ -41,18 +41,19 @@ def baseAlg(fistPath, secondPath):
     dist = 100  # Расстояние между микрофонами
 
     difDist = offsetReference(maxRangeCor, fistPath, secondPath) * speed / (2 * freq)
+    angles = array
 
     if difDist > 0:
-        angles.append(difDist / dist)
-        angles.append(360 - difDist / dist)
+        angles.append(m.degrees.cos(difDist / dist))
+        angles.append(360 - m.degrees.cos(difDist / dist))
 
-    angles.append(180 - difDist / dist)
-    angles.append(180 + difDist / dist)
+    angles.append(180 - m.degrees.cos(difDist / dist))
+    angles.append(180 + m.degrees.cos(difDist / dist))
 
     return angles
 
 
-def offsetReference (maxRange, fistPath, secondPath):
+def offsetReference(maxRange, fistPath, secondPath):
     x, sr = librosa.load(fistPath)
     firstSignalFurie = rfft(x)
     x, sr = librosa.load(secondPath)
