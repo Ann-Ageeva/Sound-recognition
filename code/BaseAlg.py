@@ -7,6 +7,7 @@ import math as m
 pathFirstMicro = ""
 pathSecondMicro = ""
 
+
 def baseAlg():
     maxRangeCor = 5500  # Диапозон маскимальной корреляции
     u = 330  # Скорость звука
@@ -23,6 +24,7 @@ def baseAlg():
     angles.append(180 + m.degrees.cos(difDist(maxRangeCor) * u / (frequency * dist)))
 
     return angles
+
 
 def difDist(l):
     x, sr = librosa.load(pathFirstMicro)
@@ -44,5 +46,6 @@ def difDist(l):
             dist = -1 * i
 
     return dist
+
 
 angles = baseAlg()
