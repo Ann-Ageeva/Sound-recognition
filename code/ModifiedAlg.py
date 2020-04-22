@@ -1,14 +1,12 @@
 import numpy
 from numpy.fft import rfft
 import librosa
-import librosa.display
 import math as m
 
 pathNorthMicro = ""
 pathSouthMicro = ""
 pathWestMicro = ""
 pathEastMicro = ""
-
 
 def myAlg():
 
@@ -41,7 +39,7 @@ def baseAlg(fistPath, secondPath):
     dist = 100  # Расстояние между микрофонами
 
     difDist = offsetReference(maxRangeCor, fistPath, secondPath) * speed / (2 * freq)
-    angles = array
+    angles = []
 
     if difDist > 0:
         angles.append(m.degrees.cos(difDist / dist))

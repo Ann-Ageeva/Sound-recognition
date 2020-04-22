@@ -1,12 +1,10 @@
 import numpy
 from numpy.fft import rfft
 import librosa
-import librosa.display
 import math as m
 
 pathFirstMicro = ""
 pathSecondMicro = ""
-
 
 def baseAlg():
     maxRangeCor = 5500  # Диапозон маскимальной корреляции
@@ -32,6 +30,7 @@ def difDist(l):
     x, sr = librosa.load(pathSecondMicro)
     rightSignalFurie = rfft(x)
     best = 0
+    dist = 0
 
     for i in range(1, l):
         corrCoeff = numpy.corrcoef(leftSignalFurie(i, l + i), rightSignalFurie(0, l))[0, 1]
