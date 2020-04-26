@@ -1,6 +1,7 @@
 import pyaudio
 import wave
 import requests
+import uuid
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
@@ -9,8 +10,11 @@ RATE = 48000
 RECORD_SECONDS = 5
 
 RECORDS_COUNT = 1
-while RECORDS_COUNT < 3:    
-    WAVE_SAMPLE_FILENAME = 'Samples/sample_%s.wav' % RECORDS_COUNT
+UUID1 = uuid.uuid4()
+UUID2 = uuid.uuid4() 
+while RECORDS_COUNT < 3:
+
+    WAVE_SAMPLE_FILENAME = 'Samples/sample_%s.wav' % UUID1 if (RECORDS_COUNT % 2 == 1) else 'Samples/sample_%s.wav' % UUID2
 
     p = pyaudio.PyAudio()
 
@@ -45,9 +49,10 @@ while RECORDS_COUNT < 3:
     if (RECORDS_COUNT % 2 == 0):
     #end
         files = {
-            'sample1': open('Samples/sample_%s.wav' % (RECORDS_COUNT - 1), 'rb'), 
-            'sample2': open('Samples/sample_%s.wav' % RECORDS_COUNT, 'rb')}
+            'sample1': open('Samples/sample_%s.wav' % UUID1, 'rb'), 
+            'sample2': open('Samples/sample_%s.wav' % UUID2, 'rb')
+        }
         response = requests.post('http://127.0.0.1:5000/', files = files)
-        print(response.content)
 
+        
     RECORDS_COUNT += 1
