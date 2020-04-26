@@ -1,10 +1,12 @@
 import numpy
-from numpy.fft import rfft
 import librosa
 import math as m
 
+from numpy.fft import rfft
+
 pathFirstMicro = ""
 pathSecondMicro = ""
+
 
 def baseAlg():
     maxRangeCor = 5500  # Диапозон маскимальной корреляции

@@ -1,15 +1,16 @@
 import numpy
-from numpy.fft import rfft
 import librosa
 import math as m
+
+from numpy.fft import rfft
 
 pathNorthMicro = ""
 pathSouthMicro = ""
 pathWestMicro = ""
 pathEastMicro = ""
 
-def myAlg():
 
+def myAlg():
     horizontAngles = baseAlg(pathWestMicro, pathEastMicro)
 
     verticalAngles = baseAlg(pathNorthMicro, pathSouthMicro) - 90
