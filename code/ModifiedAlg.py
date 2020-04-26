@@ -1,7 +1,6 @@
 import numpy
 import librosa
 import math as m
-
 from numpy.fft import rfft
 
 pathNorthMicro = ""
