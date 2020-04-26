@@ -62,13 +62,17 @@ def offsetReference(maxRange, fistPath, secondPath):
     offset = 0
 
     for i in range(0, maxRange):
-        corrCoeff = numpy.corrcoef(secondSignalFurie(i, maxRange + i), firstSignalFurie(0, maxRange))[0, 1]
+        corrCoeff = numpy.corrcoef(
+            secondSignalFurie(i, maxRange + i), firstSignalFurie(0, maxRange)
+        )[0, 1]
         if corrCoeff > best:
             best = corrCoeff
             offset = i
 
     for i in range(0, maxRange):
-        corrCoeff = numpy.corrcoef(firstSignalFurie(0, maxRange), secondSignalFurie(i, maxRange + i))[0, 1]
+        corrCoeff = numpy.corrcoef(
+            firstSignalFurie(0, maxRange), secondSignalFurie(i, maxRange + i)
+        )[0, 1]
         if corrCoeff > best:
             best = corrCoeff
             offset = -1 * i

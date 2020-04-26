@@ -19,7 +19,9 @@ def baseAlg():
 
     if difDist(maxRangeCor) > 0:
         angles.append(m.degrees.cos(difDist(maxRangeCor) * u / (frequency * dist)))
-        angles.append(360 - m.degrees.cos(difDist(maxRangeCor) * u / (frequency * dist)))
+        angles.append(
+            360 - m.degrees.cos(difDist(maxRangeCor) * u / (frequency * dist))
+        )
 
     angles.append(180 - m.degrees.cos(difDist(maxRangeCor) * u / (frequency * dist)))
     angles.append(180 + m.degrees.cos(difDist(maxRangeCor) * u / (frequency * dist)))
@@ -36,13 +38,17 @@ def difDist(l):
     dist = 0
 
     for i in range(1, l):
-        corrCoeff = numpy.corrcoef(leftSignalFurie(i, l + i), rightSignalFurie(0, l))[0, 1]
+        corrCoeff = numpy.corrcoef(leftSignalFurie(i, l + i), rightSignalFurie(0, l))[
+            0, 1
+        ]
         if corrCoeff > best:
             best = corrCoeff
             dist = i
 
     for i in range(1, l):
-        corrCoeff = numpy.corrcoef(leftSignalFurie(0, l), rightSignalFurie(i, l + i))[0, 1]
+        corrCoeff = numpy.corrcoef(leftSignalFurie(0, l), rightSignalFurie(i, l + i))[
+            0, 1
+        ]
         if corrCoeff > best:
             best = corrCoeff
             dist = -1 * i
