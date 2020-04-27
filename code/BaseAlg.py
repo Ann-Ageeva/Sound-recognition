@@ -1,9 +1,8 @@
 import math as m
 
+import librosa
 import numpy
 from numpy.fft import rfft
-
-import librosa
 
 pathFirstMicro = ""
 pathSecondMicro = ""
