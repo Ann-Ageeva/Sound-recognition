@@ -12,7 +12,6 @@ from keras import layers, models
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-
 warnings.filterwarnings("ignore")
 cmap = plt.get_cmap("inferno")
 
