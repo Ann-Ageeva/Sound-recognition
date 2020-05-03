@@ -1,12 +1,10 @@
 from flask import Flask, request, redirect, render_template
 import os
-from werkzeug.utils import secure_filename
-import Neural_Network.UseModel as NeuralNetwork
-
-ALLOWED_EXTENSIONS = {'wav'}
+import neural_network.UseModel as NeuralNetwork
 
 app = Flask(__name__)
 
+ALLOWED_EXTENSIONS = {'wav'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -26,7 +24,7 @@ def upload_file():
             return redirect(request.url)
     
         #create pathes
-        path_to_file = os.path.join("neural-network", "samples")
+        path_to_file = os.path.join("neural_network", "samples")
         path_to_file_sample1 = os.path.join(path_to_file, sample1.filename)
         path_to_file_sample2 = os.path.join(path_to_file, sample2.filename)
         

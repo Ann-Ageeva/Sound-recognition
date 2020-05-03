@@ -2,6 +2,7 @@ import pyaudio
 import wave
 import requests
 import uuid
+import os
 
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
@@ -53,6 +54,8 @@ while RECORDS_COUNT < 3:
             'sample2': open('Samples/sample_%s.wav' % UUID2, 'rb')
         }
         response = requests.post('http://127.0.0.1:5000/', files = files)
+
+        print(response.content)
 
         
     RECORDS_COUNT += 1
