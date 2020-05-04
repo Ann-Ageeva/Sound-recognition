@@ -32,5 +32,5 @@ before_script:
 script:
   # check that black formatting would not be applied
   - black --check .
-  - isort -rc -c .
+  - isort --diff -rc -c .
   - flake8
