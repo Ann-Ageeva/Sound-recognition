@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template
 import os
 import neural_network.UseModel as NeuralNetwork
+import time
 
 app = Flask(__name__)
 
@@ -12,7 +13,11 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-            
+        
+        print ('here') 
+        print (request.files['sample1'])
+        print (request.files['sample2'])
+        #time.sleep(10)    
         sample1 = request.files['sample1']
         sample2 = request.files['sample2']
         # if user does not select file, browser also
