@@ -28,7 +28,7 @@ def baseAlg():
     return angles
 
 
-def difDist(l):
+def difDist(maxRange):
     x, sr = librosa.load(pathFirstMicro)
     leftSignalFurie = rfft(x)
     x, sr = librosa.load(pathSecondMicro)
@@ -36,18 +36,18 @@ def difDist(l):
     best = 0
     dist = 0
 
-    for i in range(1, l):
-        corrCoeff = numpy.corrcoef(leftSignalFurie(i, l + i), rightSignalFurie(0, l))[
-            0, 1
-        ]
+    for i in range(1, maxRange):
+        corrCoeff = numpy.corrcoef(
+            leftSignalFurie(i, maxRange + i), rightSignalFurie(0, maxRange)
+        )[0, 1]
         if corrCoeff > best:
             best = corrCoeff
             dist = i
 
-    for i in range(1, l):
-        corrCoeff = numpy.corrcoef(leftSignalFurie(0, l), rightSignalFurie(i, l + i))[
-            0, 1
-        ]
+    for i in range(1, maxRange):
+        corrCoeff = numpy.corrcoef(
+            leftSignalFurie(0, maxRange), rightSignalFurie(i, maxRange + i)
+        )[0, 1]
         if corrCoeff > best:
             best = corrCoeff
             dist = -1 * i
