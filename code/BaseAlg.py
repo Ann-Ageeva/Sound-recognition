@@ -3,18 +3,22 @@ import math as m
 import numpy as np
 from numpy.fft import rfft
 
+import matplotlib.pyplot as plt
+import librosa.display
+
+
 import librosa
 
 
 def test():
 
-    maxRangeCor = 10000  # Диапозон маскимальной корреляции
+    maxRangeCor = 1000  # Диапозон маскимальной корреляции
     speed = 330  # Скорость звука
     frequency = 22000  # Частота дискретизации
     dist = 100  # Расстояние между микрофонами
 
-    pathFirstMicro = 'C:\\Users\\wwwvn\\Desktop\\тест\\detect\\right side about 20 degree\\mic 1 - 01 (Left).wav'
-    pathSecondMicro = 'C:\\Users\\wwwvn\\Desktop\\тест\\detect\\right side about 20 degree\\mic 1 - 02 (Right).wav'
+    pathFirstMicro = 'C:\\Users\\wwwvn\\Desktop\\тест\\drone detect\\192 khz_ 64-bit\\test 1 - 01 (Left).wav'
+    pathSecondMicro = 'C:\\Users\\wwwvn\\Desktop\\тест\\drone detect\\192 khz_ 64-bit\\test 1 - 02 (Right).wav'
 
     angles = baseAlg(maxRangeCor, speed, frequency, dist, pathFirstMicro, pathSecondMicro)
 
@@ -22,39 +26,44 @@ def test():
 
 def baseAlg(maxRangeCor, speed, frequency, dist, pathFirstMicro, pathSecondMicro):
     angles = list()
+    difDistValue=difDist(maxRangeCor, pathFirstMicro, pathSecondMicro)
 
-    if difDist(maxRangeCor, pathFirstMicro, pathSecondMicro) > 0:
-        angles.append(m.degrees(m.cos(difDist(maxRangeCor, pathFirstMicro, pathSecondMicro) * speed / (frequency * dist))))
+    if difDistValue > 0:
+        angles.append(m.degrees(m.cos(difDistValue)))
         angles.append(
-            360 - m.degrees(m.cos(difDist(maxRangeCor, pathFirstMicro, pathSecondMicro) * speed / (frequency * dist)))
+            360 - m.degrees(m.cos(difDistValue))
         )
 
-    angles.append(180 - m.degrees(m.cos(difDist(maxRangeCor, pathFirstMicro, pathSecondMicro) * speed / (frequency * dist))))
-    angles.append(180 + m.degrees(m.cos(difDist(maxRangeCor, pathFirstMicro, pathSecondMicro) * speed / (frequency * dist))))
+    angles.append(180 - m.degrees(m.cos(difDistValue)))
+    angles.append(180 + m.degrees(m.cos(difDistValue)))
 
     return angles
 
 
 def difDist(l, pathFirstMicro, pathSecondMicro):
-    leftSignalFurie, sr = librosa.load(pathFirstMicro, sr=10000)
-    X = rfft(leftSignalFurie)
-    rightSignalFurie, sr = librosa.load(pathSecondMicro, sr=10000)
-    y = rfft(rightSignalFurie)
-    corrCoeff = np.corrcoef(X, y)
+    leftSignal, sr = librosa.load(pathFirstMicro  , sr=None)
+    rightSignal, sr = librosa.load(pathSecondMicro, sr=None)
+    size = leftSignal.size
     best = 0
     dist = 0
 
-    for i in range(0, l):
-        VAL = np.vstack((leftSignalFurie, rightSignalFurie))
-        corrCoeff= np.corrcoef(leftSignalFurie, rightSignalFurie)
-        corrCoeff = np.corrcoef(leftSignalFurie[i:l + i], rightSignalFurie[0:l])[0][1]
+    """plt.figure(figsize=(14, 5))
+    librosa.display.waveplot(rightSignal, sr=sr)
+    plt.show()
+    plt.figure(figsize=(14, 5))
+    librosa.display.waveplot(leftSignal, sr=sr)
+    plt.show()"""
 
+    for i in range(0, l):
+        VAL = np.vstack((leftSignal, rightSignal))
+        corrCoeff= np.corrcoef(leftSignal, rightSignal)
+        corrCoeff = np.corrcoef(leftSignal[i:size], rightSignal[0:size - i])[0][1]
         if corrCoeff > best:
             best = corrCoeff
             dist = i
 
     for i in range(0, l):
-        corrCoeff = np.corrcoef(leftSignalFurie[0:l], rightSignalFurie[i: l + i])[0][1]
+        corrCoeff = np.corrcoef(leftSignal[0:size - i], rightSignal[i:size])[0][1]
 
         if corrCoeff > best:
             best = corrCoeff
