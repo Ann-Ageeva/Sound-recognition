@@ -95,13 +95,12 @@ def removeFiles(FILENAME_Sample1, FILENAME_Sample2):
     os.remove(FILENAME_Sample1)
     os.remove(FILENAME_Sample2)
     os_lock.release() 
-import time
+
 def main():
     while True:
         files = getRecords()
 
         Thread(target=sendFilesThread, args=(files['sample1'], files['sample2']), daemon=True).start()
-        time.sleep(100)
-         
+
 if __name__ == '__main__':
     main()

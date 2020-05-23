@@ -33,7 +33,6 @@ def GetFeatures(songname):
 def GetAnswer(SoundFeatures):
     # Preparing data
     SoundArr_transformed = scaler.transform(SoundFeatures.reshape(1, -1))
-    
     # Get prediction
     with session.graph.as_default():
         backend.set_session(session)
