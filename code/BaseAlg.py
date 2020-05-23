@@ -41,7 +41,7 @@ def baseAlg(maxRangeCor, speed, frequency, dist, pathFirstMicro, pathSecondMicro
 
 
 def difDist(l, pathFirstMicro, pathSecondMicro):
-    leftSignal, sr = librosa.load(pathFirstMicro  , sr=None)
+    leftSignal, sr = librosa.load(pathFirstMicro, sr=None)
     rightSignal, sr = librosa.load(pathSecondMicro, sr=None)
     size = leftSignal.size
     best = 0
@@ -55,8 +55,6 @@ def difDist(l, pathFirstMicro, pathSecondMicro):
     plt.show()"""
 
     for i in range(0, l):
-        VAL = np.vstack((leftSignal, rightSignal))
-        corrCoeff= np.corrcoef(leftSignal, rightSignal)
         corrCoeff = np.corrcoef(leftSignal[i:size], rightSignal[0:size - i])[0][1]
         if corrCoeff > best:
             best = corrCoeff
