@@ -7,14 +7,14 @@ import tensorflow as tf
 
 
 # Get model handler
-with open('neural_network\\scaler.pickle', 'rb') as f:
+with open('algorithms\\neural_network\\scaler.pickle', 'rb') as f:
     scaler = pickle.load(f)
 
 # Model download
 session = tf.Session(graph=tf.Graph())
 with session.graph.as_default():
     backend.set_session(session)
-    model = models.load_model('neural_network\\CNN.h5')
+    model = models.load_model('algorithms\\neural_network\\CNN.h5')
 
 # Feature extraction 
 def GetFeatures(songname):
