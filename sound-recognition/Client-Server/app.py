@@ -2,7 +2,11 @@ from flask import Flask, request, redirect, render_template
 import os
 import algorithms.UseModel as NeuralNetwork
 import algorithms.CalculateAngle as CalculateAngle
-from multiprocessing import Process, Value, Array
+import threading
+from threading import Thread
+import queue
+
+os_lock = threading.Lock()
 
 app = Flask(__name__)
 
@@ -31,9 +35,8 @@ def getAnswer(answer1, answer2, path_to_sample1, path_to_sample2):
     if (answer1.base_answer and answer2.base_answer):
         angle = CalculateAngle.Calculate(path_to_sample1, path_to_sample2)
         return 'Record contains drone sound! Angel:' + str(angle[0])
-    elif (not answer1.base_answer and not answer2.base_answer):
-        angle = CalculateAngle.Calculate(path_to_sample1, path_to_sample2)            
-        return 'Record doesn`t contains drone sound! Angel:' + str(angle[0])
+    elif (not answer1.base_answer and not answer2.base_answer):          
+        return 'Record doesn`t contains drone sound!'
     else:
         if (answer1.percent > answer2.percent):
             if (answer1.base_answer):
@@ -49,8 +52,10 @@ def getAnswer(answer1, answer2, path_to_sample1, path_to_sample2):
                 return 'Record doesn`t contains drone sound!'    
 
 def removeFiles(path_to_file1, path_to_file2):
+    os_lock.acquire()
     os.remove(path_to_file1)
-    os.remove(path_to_file2)    
+    os.remove(path_to_file2)
+    os_lock.release()     
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -78,7 +83,7 @@ def upload_file():
         answer = getAnswer(answer1, answer2, path_to_sample1, path_to_sample2)
 
         #remove files
-        removeFiles(path_to_sample1, path_to_sample2)
+        Thread(target=removeFiles, args=(path_to_sample1, path_to_sample2), daemon=True).start()
 
         return answer
                 
