@@ -13,3 +13,6 @@ python app.py
 # client part for recording wav files and sending it to server
 python request.py
 ```
+
+# Used dataset
+https://github.com/saraalemadi/DroneAudioDataset
