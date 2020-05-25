@@ -1,8 +1,9 @@
+import pickle
+
 import librosa
 import numpy as np
-import pickle
-from keras import models, backend
 import tensorflow as tf
+from keras import backend, models
 
 # Get model handler
 with open("algorithms\\neural_network\\scaler.pickle", "rb") as f:
