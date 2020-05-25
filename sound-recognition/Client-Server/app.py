@@ -4,7 +4,6 @@ import algorithms.UseModel as NeuralNetwork
 import algorithms.CalculateAngle as CalculateAngle
 import threading
 from threading import Thread
-import queue
 
 os_lock = threading.Lock()
 

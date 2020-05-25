@@ -1,10 +1,8 @@
 import librosa
 import numpy as np
-import os
 import pickle
 from keras import models, backend
 import tensorflow as tf
-
 
 # Get model handler
 with open("algorithms\\neural_network\\scaler.pickle", "rb") as f:
@@ -15,6 +13,7 @@ session = tf.Session(graph=tf.Graph())
 with session.graph.as_default():
     backend.set_session(session)
     model = models.load_model("algorithms\\neural_network\\CNN.h5")
+
 
 # Feature extraction
 def GetFeatures(songname):
