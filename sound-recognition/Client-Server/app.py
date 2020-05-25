@@ -1,9 +1,11 @@
-from flask import Flask, request, redirect, render_template
 import os
-import algorithms.UseModel as NeuralNetwork
-import algorithms.CalculateAngle as CalculateAngle
 import threading
 from threading import Thread
+
+from flask import Flask, redirect, render_template, request
+
+import algorithms.CalculateAngle as CalculateAngle
+import algorithms.UseModel as NeuralNetwork
 
 os_lock = threading.Lock()
 

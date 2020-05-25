@@ -1,10 +1,11 @@
-import pyaudio
-import wave
-import requests
-import uuid
 import os
 import threading
+import uuid
+import wave
 from threading import Thread
+
+import pyaudio
+import requests
 
 os_lock = threading.Lock()
 CHUNK = 1024
